@@ -353,13 +353,13 @@ h6 span{
 										<div class="section text-center">
                       <h4 class="mb-4 pb-3" id="priceText">Объявление</h4>
 											<div class="form-group">
-												<input type="text" name="logname" class="form-style" placeholder="LST" id="logname" autocomplete="off">
+												<input type="text" name="logname" class="form-style" placeholder="LST" id="LST" autocomplete="off">
 											</div>	
 											<div class="form-group mt-2">
-												<input type="text" name="logpass" class="form-style" placeholder="TON" id="logpass" autocomplete="off">
+												<input type="text" name="logpass" class="form-style" placeholder="TON" id="TON" autocomplete="off">
 											</div>
                                             <div class="form-group mt-2">
-												<textarea type="text" name="logpass" class="form-style" placeholder="Комментарии" id="logpass" autocomplete="off" style="height: 110px; resize: none;"></textarea>
+												<textarea type="text" name="logpass" class="form-style" placeholder="Комментарии" id="COMMENT" autocomplete="off" style="height: 110px; resize: none;"></textarea>
 											</div>
 											<a href="#" class="btn mt-4" onclick="send()">Отправить</a>
 				      					</div>
@@ -390,8 +390,6 @@ h6 span{
     };
 
     const truncateToTwo = num => Math.floor(num * 100) / 100;
-
-    let tg = window.Telegram.WebApp;
     const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: 'https://raw.githubusercontent.com/Maxutkoe/TgMayson/main/ton-manifest/tonconnect-manifest.json',
         buttonRootId: 'ton-connect'
@@ -406,20 +404,21 @@ async function sendMessage()
     // const xht = new XMLHttpRequest();
     // xht.open("GET", url);
     // xht.send();
+    let tg = window.Telegram.WebApp;
     tg.expand();
 
-    const wallet = tonConnectUI.wallet.account.address;
-    const lst = document.getElementById("LST");
-    const ton = document.getElementById("TON");
-    const comment = document.getElementById("COMMENT");
-    const link = `https://maxutkoe.github.io/Profile/Contracts/Pay/?wallet=${wallet}&price=${ton*1000000000}&tokens=${lst}&comment=${comment}`; 
+    let wallet = tonConnectUI.wallet.account.address;
+    let lst = document.getElementById("LST").value;
+    let ton = document.getElementById("TON").value;
+    let comment = document.getElementById("COMMENT").value;
+    let link = `https://maxutkoe.github.io/Profile/Contracts/Pay/?wallet=${wallet}&price=${ton*1000000000}&tokens=${lst}&comment=${comment}`; 
 
 
     let data = {
         wallet: wallet,
-        lst: lst.value,
-        ton: ton.value,
-        comment: comment.value,
+        lst: lst,
+        ton: ton,
+        comment: comment,
         link: link,
     };
     tg.sendData(JSON.stringify(data));
